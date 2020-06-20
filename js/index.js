@@ -1,5 +1,6 @@
 const Main = (function () {
   const btn = document.getElementById('btn');
+  
   const loader = document.querySelector('.loader');
   const searchList = document.getElementById('search-results-list');
   let searchResults = [];
@@ -65,6 +66,22 @@ const Main = (function () {
     });
   }
 
+  /* Add hero to localstorage */
+  function addHeroToFavourites(hero) {
+    console.log("addHEroToFavourite");
+    if (!hero) return;
+
+    const favouritesFromLocalStorage = getFavouriteSuperheroes();
+    favouritesFromLocalStorage.push(hero);
+
+    // Save in localstorage
+    localStorage.setItem(
+      FAVOURITES,
+      JSON.stringify(favouritesFromLocalStorage)
+    );
+
+  }
+
   function handleSearch(e){
     console.log("i am in handle search");
     // fetching the data
@@ -88,15 +105,71 @@ const Main = (function () {
       });
   }
 
+  
+   /* Remove hero from localstorage */
+   function removeHeroFromFavourites(heroId) {
+    console.log("removeHeroFromFavourite");
+    if (!heroId) return;
+
+    let favouritesFromLocalStorage = getFavouriteSuperheroes();
+
+    // Remove hero from localstorage
+    favouritesFromLocalStorage = favouritesFromLocalStorage.filter(
+      (item) => item.id !== heroId
+    );
+
+    // Save in localstorage
+    localStorage.setItem(
+      FAVOURITES,
+      JSON.stringify(favouritesFromLocalStorage)
+    );
+
+  }
+
+  function handleDocumentClick(e){
+    const target = e.target;
+
+    if (target.classList.contains('add-to-fav')) {
+      console.log("first if");
+      // Find the hero data and store it in favourites and localstorage
+      const searchResultClickedId = target.dataset.id;
+      const hero = searchResults.filter(
+        (hero) => hero.id === searchResultClickedId
+      );
+      addHeroToFavourites(hero[0]);
+      renderSearchResults();
+    } else if (target.classList.contains('remove-from-fav')) {
+      console.log("second if");
+      // Find the hero data and remove from local storage
+      const searchResultClickedId = target.dataset.id;
+
+      // Show add to fav button and hide the remove from fav button
+      const addToFavBtn = document.querySelector(
+        `button[data-id="${searchResultClickedId}"].add-to-fav`
+      );
+      if (addToFavBtn) addToFavBtn.style.display = 'block';
+
+      const removeFromFavBtn = document.querySelector(
+        `button[data-id="${searchResultClickedId}"].remove-from-fav`
+      );
+      if (removeFromFavBtn) removeFromFavBtn.style.display = 'none';
+
+      removeHeroFromFavourites(searchResultClickedId);
+    }
+  }
+
   function init(){
     console.log("I Am in init");
     btn.addEventListener('click',handleSearch);
+    document.addEventListener('click',handleDocumentClick);
   }
 
   
 
   return {
     init,
+    getFavouriteSuperheroes,
+    removeHeroFromFavourites
   };
 })();
 

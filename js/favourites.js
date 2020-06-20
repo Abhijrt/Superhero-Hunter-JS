@@ -34,15 +34,22 @@ const Favourites = (function () {
     // Common.hideLoader();
     return;
   }
+   /* Handle search key down event and make an API all */
+   function handleDocumentClick(e) {
+    const target = e.target;
+
+    if (target.classList.contains('remove-from-fav')) {
+      // Find the hero data and store it in favourites and localstorage
+      const searchResultClickedId = target.dataset.id;
+      Main.removeHeroFromFavourites(searchResultClickedId);
+      renderFavourites();
+    }
+  }
 
   function init() {
     renderFavourites();
-    const remove = document.getElementsByClassName('remove-from-fav');
-    for(let i=0;i<remove.length;i++){
-      remove[i].addEventListener('click',function(){
-        renderFavourites();
-      });
-    }
+    document.addEventListener('click', handleDocumentClick);
+
   }
   return{
     init,
