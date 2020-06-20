@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Hero Api</title>
-    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" > </script> 
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -15,8 +14,8 @@
                 <a href="#" id="favourate-btn">Abhay's Super Hero</a>
               </li>
               <li>
-                    <input type="search" placeholder="Search" id="search" aria-label="Search">
-                    <button id="btn"  type="submit">Search</button>
+                    <input  type="search" placeholder="Search" id="search" aria-label="Search">
+                    <button  type="submit">Search</button>
               </li>
               <li  id="favourate-btn">
                 <a  href="./favourites.html">Favourites</a>
@@ -25,20 +24,16 @@
           
         </div>
       </nav>
-      <main id="main">
-        <ul id="search-results-list">
-
-        </ul>
-      </main>
       <div class="loader"></div>
-        <div id="img-container">
-            <img src="./images/superHero.jpg" alt="">
-        </div>
-        <div id="toast" ></div>
-    <!-- <script src="./js/common.js"></script> -->
-    <script src="./js/index.js"></script>
-    <script>
-      Main.init();
-    </script>
+
+      <div class="super-hero-detail"></div>
+  
+      <div id="toast"></div>
+  
+      <script src="/js/common.js"></script>
+      <script src="/js/superHeroDetals.js"></script>
+      <script>
+        SuperHero.init();
+      </script>
 </body>
 </html>
